@@ -7,9 +7,9 @@ life.
 
 ## DrWatson - Reproducible Science
 
-add link to scripts
+Final run script: [scripts/npu/final_run.jl](scripts/npu/final_run.jl)
 
 
 ## Weave - Scientific Report Generation / Literate Programming
 
-add link to scripts
+Julia markdown for simple scientific report [papers/main.jmd](papers/main.jmd)
