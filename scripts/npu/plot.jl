@@ -1,5 +1,5 @@
 using DrWatson
-@quickactivate "papers_in_julia"
+@quickactivate "JuliaFudge"
 
 using Plots
 pyplot()

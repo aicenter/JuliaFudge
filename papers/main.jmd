@@ -1,0 +1,120 @@
+---
+title: Research with Julia
+author: Niklas Heim
+date: `j Date(now())`
+
+weave_options:
+    doctype: md2html
+    out_width: 50%
+---
+
+```julia echo=false
+using DrWatson
+@quickactivate "JuliaFudge"
+```
+
+This document is a brief summary of my current research workflow which is
+largely based on [`DrWatson.jl`](https://github.com/JuliaDynamics/DrWatson.jl)
+including a tutorial of how to write a quick report like this one
+using the Julia package [`Weave.jl`](https://github.com/JunoLab/Weave.jl).
+
+
+# Reproducibility with DrWatson.jl
+
+DrWatson is a scientific project assistant.
+Check out the [docs](https://juliadynamics.github.io/DrWatson.jl/dev/).
+It comes with many convenience functions that solve the tedious tasks which all
+of us have probably solved multiple times, like running simulations, naming them,
+collecting results, remembering which commit we ran that result with,...
+
+In the beginning I do:
+```julia eval=false
+using DrWatson
+initialize_project("JuliaFudge")
+```
+which creates a great project structure including a `Project.toml` file which
+contains all your dependencies.  Always start my scripts with
+```julia eval=false
+using DrWatson
+@quickactivate "JuliaFudge"
+```
+to load the correct project. Then you can use e.g. `plotsdir()` to get the path
+to this projects plot directory. Check out the demos in `scripts/run.jl`.
+
+## DrWatson functions I use most
+
+* `produce_or_load` (also tags results with current git commit!)
+* `datadir / plotsdir / customdir`
+* `collect_results!`
+
+and combine them with `@unpack` and `@kwdef`.
+
+
+# Weave.jl
+
+```julia; term=true; echo=false
+nr_plots = 6;
+```
+
+With [Weave.jl](http://weavejl.mpastell.com/stable/) you can easily write
+documents (HTML/PDF/Markdown) *directly in Julia*. For example, create
+`j nr_plots` sinus curves that are always up to date:
+
+```julia; fig_height=2
+using Plots
+
+plot([x -> sin(x-a) for a in range(0, π/2, length=nr_plots)], 0, 2π;
+    palette=:Dark2_5, lw=2)
+```
+
+You can also compile this directly PDF using LaTeX, even with custom designs and
+such because you can specify the template that is used by Weave.jl.
+
+## Small homework
+
+Assume we want to each a Neural Power Unit ([NPU](https://github.com/nmheim/NeuralArithmetic.jl))
+to learn the function $f$:
+```math
+f(x,y) = [x+y,\, x\times y,\, x\div y,\, \sqrt{x}]
+```
+
+Once we have run a bunch of experiments and collected the results with
+`collect_results!`, we can write a small evaluation that outputs a table
+that compares the testing MSE of some bunch of hyper-parameters:
+
+```julia; wrap=false;
+using Statistics
+using PrettyTables
+using Measurements
+
+df = include(scriptsdir("npu","collect.jl"))
+
+table = combine(groupby(df, "βl1")) do gdf
+  (add  = measurement(mean(gdf[!,"add_tst"]), std(gdf[!,"add_tst"])),
+   mult = measurement(mean(gdf[!,"mult_tst"]), std(gdf[!,"mult_tst"])),
+   div  = measurement(mean(gdf[!,"div_tst"]), std(gdf[!,"div_tst"])),
+   sqrt = measurement(mean(gdf[!,"sqrt_tst"]), std(gdf[!,"sqrt_tst"])),
+   βl1  = first(gdf.βl1))
+end
+
+pretty_table(table, ["βl1","Addition","Multiplication", "Division", "Square-root"])
+```
+
+And then we can check what the best learned model actually looked like by calling
+our plotting script directly from the weaved document, but nobody wants to see
+plotting code, so we hide it.
+```julia; echo=false
+include(scriptsdir("npu","plot.jl"))
+```
+
+If we would have done our homework thoroughly a result might look like this:
+
+![arithmetic_plots](layers.png)
+
+## Misc
+
+It is possible to convert from `.jmd` to `pandoc` and then use the `--listings`
+option to use custom code listings.
+
+I don't really use it but you can also convert scripts to notebooks or `jmd`
+files (all directions).
