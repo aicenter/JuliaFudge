@@ -1,0 +1,13 @@
+dataset,model,parameters,fold,cross_entropy,auc
+iris,XGBoostClassifier,max_depth=2,1,0.25730273,0.9701960784313727
+iris,XGBoostClassifier,max_depth=2,2,0.21342885,0.964841871091871
+iris,XGBoostClassifier,max_depth=2,3,0.18926118,0.9393783068783068
+iris,XGBoostClassifier,max_depth=4,1,0.18180339,0.9656987239340179
+iris,XGBoostClassifier,max_depth=4,2,0.24722095,0.945458089668616
+iris,XGBoostClassifier,max_depth=4,3,0.25363675,0.9494444444444444
+iris,XGBoostClassifier,max_depth=6,1,0.20240903,0.9469223228898151
+iris,XGBoostClassifier,max_depth=6,2,0.20330149,0.9765082956259428
+iris,XGBoostClassifier,max_depth=6,3,0.22914468,0.9705820105820107
+iris,XGBoostClassifier,max_depth=8,1,0.18312919,0.9718253968253969
+iris,XGBoostClassifier,max_depth=8,2,0.23884553,0.9651333036588454
+iris,XGBoostClassifier,max_depth=8,3,0.21558672,0.9446028562940327

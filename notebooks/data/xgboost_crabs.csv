@@ -1,0 +1,13 @@
+dataset,model,parameters,fold,cross_entropy,auc
+crabs,XGBoostClassifier,max_depth=2,1,0.2084933,0.9867401426801657
+crabs,XGBoostClassifier,max_depth=2,2,0.23260786,0.9676679290831997
+crabs,XGBoostClassifier,max_depth=2,3,0.20358126,0.9739723869754829
+crabs,XGBoostClassifier,max_depth=4,1,0.2012598,0.9708420356446671
+crabs,XGBoostClassifier,max_depth=4,2,0.20814751,0.9707707432529179
+crabs,XGBoostClassifier,max_depth=4,3,0.22569673,0.9642801253286066
+crabs,XGBoostClassifier,max_depth=6,1,0.24152058,0.9707086746407979
+crabs,XGBoostClassifier,max_depth=6,2,0.21261968,0.9757435768711796
+crabs,XGBoostClassifier,max_depth=6,3,0.19573013,0.9831538262439138
+crabs,XGBoostClassifier,max_depth=8,1,0.2615789,0.9672738637806476
+crabs,XGBoostClassifier,max_depth=8,2,0.24767824,0.9738902505446624
+crabs,XGBoostClassifier,max_depth=8,3,0.21591318,0.9753449527959331
