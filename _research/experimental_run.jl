@@ -1,17 +1,19 @@
-using DrWatson
-@quickactivate "JuliaFudge"
-
-using Logging
-using TerminalLoggers
-using ProgressLogging
-global_logger(TerminalLogger(right_justify=80))
-
 using Flux
 using LinearAlgebra
 using Statistics
 using NeuralArithmetic
 
-include(srcdir("dataset.jl"))
+f1(x::Array) = reshape(x[1,:] .+ x[2,:], 1, :)
+f2(x::Array) = reshape(x[1,:] .* x[2,:], 1, :)
+f3(x::Array) = reshape(x[1,:] ./ x[2,:], 1, :)
+f4(x::Array) = reshape(sqrt.(x[1,:]), 1, :)
+f(x::Array)  = cat(f1(x),f2(x),f3(x),f4(x),dims=1)
+
+function generate()
+    x = rand(Float32, 2, 100) .* 1.9f0 .+ 0.1f0
+    y = f(x)
+    (x,y)
+end
 
 niters = 20000
 βl1    = 0

@@ -1,0 +1,139 @@
+---
+title: Organize Your Research!
+author: Niklas Heim
+date: `j Date(now())`
+
+weave_options:
+        doctype: md2html
+---
+
+```julia echo=false
+using DrWatson
+@quickactivate "JuliaFudge"
+```
+
+# DrWatson.jl
+
+[Have you thought things like:](https://juliadynamics.github.io/DrWatson.jl/dev/#Rationale-1)
+
+* Urgh, I moved my folders and now my load commands don't work anymore!
+* Hold on, haven't I run this simulation already?
+* Do I have to produce a dataframe of my finished simulations AGAIN?!
+* Wait, are those experiments already processed?
+* PFfffff I am tired of typing `savename = "w=$w_f=$f_x=$x.txt"`, can't I do it automatically?
+* Yeah you've sent me your project but none of the scripts work...
+* It would be so nice to automatically integrate git information to all the data I save...
+* ...
+
+DrWatson tries to eradicate such bad thoughts with:
+
+* `srcdir`, `plotsdir`, etc. for runable code on different machines
+* `savename` automatically creates meaningful name for your simulations
+* `tag` to attach git info to files
+* `produce_or_load` to never run the same simulation twice
+* `collect_results!` gather results in a `DataFrame`
+
+#### Focus on
+
+* __What__ not *How*
+* __Reproducibility__
+* __Composability__ and __Code Reuse__
+
+Everything starts with
+```julia eval=false
+using DrWatson
+initialize_project("JuliaFudge")
+```
+which creates a new git repository with the DrWatson project structure:
+```bash
+│
+├── _research        <- WIP scripts, code, notes, comments, etc.
+│
+├── data             <- **Immutable and add-only!**
+│
+├── plots            <- Self-explanatory.
+│
+├── papers           <- Scientific papers resulting from the project.
+│
+├── scripts          <- Various scripts (makes use of stuff in src)
+│
+├── src              <- Only functions/structs/reusable stuff
+│
+├── .gitignore       <- by default ignores _research, data, plots, videos,
+│                       notebooks and latex-compilation related files.
+│
+├── Manifest.toml    <- Contains full list of exact package versions used currently.
+└── Project.toml     <- Main project file, allows activation and installation.
+```
+Note the `.toml` files that keep track of every package version (even commit for
+unversioned packages/packages on master branches)
+
+
+## From `_research` to `scripts`
+
+Lets say we have a `simulate` function that we came up with through
+experimentation in the `_research` folder.
+```julia term=true
+simulate(n,w,opt) = w*rand()
+n=10; w=4.2; opt="ADAM";
+r = simulate(n,w,opt)
+```
+
+We want to systematically name our results according to the parameters that
+generate them.
+```julia term=true
+config = @dict(n,w,opt)
+savename(config)
+```
+Find out more with `?savename`.
+
+Include git information in your results!
+```julia term=true
+result = Dict(:computed=>r)
+tag!(result)
+```
+
+Store it in the data folder. `safesave` makes sure that nothing is overwritten.
+```julia term=true
+safesave(datadir("mysimulation", savename(config, "bson")), result)
+```
+
+Do some of the above automatically with
+```julia
+function run_simulation(config)
+    @unpack n,w,opt = config
+    result = simulate(n,w,opt)
+    @dict(result)
+end
+
+produce_or_load(datadir("mysimulation"),
+                @dict(n,w,opt),
+                run_simulation)
+```
+
+Assume we are starting from a script like
+[`_research/experimental_run.jl`](../_research/experimental_run.jl) we use
+`produce_or_load` to explore the hyper-parameters of our model.
+Result: [`run.jl`](../scripts/run.jl)
+
+
+## Many simulations
+
+Easily create a list of all parameter combinations that you want to test
+```julia
+general_args = Dict(
+    "opt" => ["ADAM", "RMSProp"],
+    "n" => [10,20,30],
+    "w" => [4.2,1.1])
+
+dict_list(general_args)
+```
+
+Finally, `collect_results!` creates a file containing a `DataFrame` with all
+your results. Each key in the results will result in a column.  New results are
+appended to the dataframe.
+
+
+## Plot your results
+
+![res](layers.png)

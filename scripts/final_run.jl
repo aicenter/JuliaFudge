@@ -63,7 +63,7 @@ end
 
 @progress for run in 1:5
     res, _ = produce_or_load(datadir("arithmetic"),
-                           Dict(:niters=>2000,
+                           Dict(:niters=>20000,
                                 :βl1=>0,
                                 :lr=>0.005,
                                 :run=>run,

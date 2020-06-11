@@ -6,18 +6,25 @@ using TerminalLoggers
 using ProgressLogging
 global_logger(TerminalLogger(right_justify=80))
 
-using Flux
 using LinearAlgebra
 using Statistics
-using NeuralArithmetic
+using Flux                    # ML Library
+using NeuralArithmetic        # Custom layers
 
-include(srcdir("dataset.jl"))
+include(srcdir("dataset.jl")) # defines `generate` to produce our data
+                              # julia>?generate to find out what it does!
 
+# hyper parameters
 niters = 20000
 βl1    = 0
 lr     = 0.005
 hdim   = 6
 
+"""
+    run_npu(d::Dict)
+
+Trains an NPU to learn the task defined by the `generate` function.
+"""
 function run_npu(d::Dict)
     @unpack niters, βl1, lr, hdim = d
 
