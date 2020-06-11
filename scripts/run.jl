@@ -1,10 +1,7 @@
 using DrWatson
-@quickactivate "JuliaFudge"
-
-using Logging
-using TerminalLoggers
-using ProgressLogging
-global_logger(TerminalLogger(right_justify=80))
+@quickactivate "JuliaFudge"   # start with correct project environment
+                              # I recommend just starting with `julia --project`
+                              # but @quickactivate does not hurt
 
 using LinearAlgebra
 using Statistics

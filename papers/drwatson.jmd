@@ -65,8 +65,10 @@ which creates a new git repository with the DrWatson project structure:
 ├── Manifest.toml    <- Contains full list of exact package versions used currently.
 └── Project.toml     <- Main project file, allows activation and installation.
 ```
-Note the `.toml` files that keep track of every package version (even commit for
-unversioned packages/packages on master branches)
+
+Use `julia --project` or `@quickactivate "ProjectName"` to make sure that you
+are in the correct environment (making sure that you are using the versions you
+want).
 
 
 ## From `_research` to `scripts`

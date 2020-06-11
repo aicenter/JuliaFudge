@@ -730,7 +730,7 @@ div.title {text-align: center;}
 │
 ├── Manifest.toml    &lt;- Contains full list of exact package versions used currently.
 └── Project.toml     &lt;- Main project file, allows activation and installation.</code></pre>
-<p>Note the <code>.toml</code> files that keep track of every package version &#40;even commit for unversioned packages/packages on master branches&#41;</p>
+<p>Use <code>julia --project</code> or <code>@quickactivate &quot;ProjectName&quot;</code> to make sure that you are in the correct environment &#40;making sure that you are using the versions you want&#41;.</p>
 <h2>From <code>_research</code> to <code>scripts</code></h2>
 <p>Lets say we have a <code>simulate</code> function that we came up with through experimentation in the <code>_research</code> folder.</p>
 
@@ -742,7 +742,7 @@ simulate (generic function with 1 method)
 &quot;ADAM&quot;
 
 </span><span class='hljl-nB'>julia&gt; </span><span class='hljl-n'>r</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>simulate</span><span class='hljl-p'>(</span><span class='hljl-n'>n</span><span class='hljl-p'>,</span><span class='hljl-n'>w</span><span class='hljl-p'>,</span><span class='hljl-n'>opt</span><span class='hljl-p'>)</span><span class='hljl-t'>
-2.0868413004884045</span>
+3.129973211851907</span>
 </pre>
 
 <p>We want to systematically name our results according to the parameters that generate them.</p>
@@ -764,13 +764,13 @@ Dict{Symbol,Any} with 3 entries:
 <pre class='hljl'>
 <span class='hljl-nB'>julia&gt; </span><span class='hljl-n'>result</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Dict</span><span class='hljl-p'>(</span><span class='hljl-sc'>:computed</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>r</span><span class='hljl-p'>)</span><span class='hljl-t'>
 Dict{Symbol,Float64} with 1 entry:
-  :computed =&gt; 2.08684
+  :computed =&gt; 3.12997
 
 </span><span class='hljl-nB'>julia&gt; </span><span class='hljl-nf'>tag!</span><span class='hljl-p'>(</span><span class='hljl-n'>result</span><span class='hljl-p'>)</span><span class='hljl-t'>
 Dict{Symbol,Any} with 3 entries:
-  :computed  =&gt; 2.08684
-  :gitcommit =&gt; &quot;a67e0dfb274300863a8f56778750af0f6e3b4502_dirty&quot;
-  :gitpatch  =&gt; &quot;diff --git a/scripts/npu/collect.jl b/scripts/npu/collect.jl\n…</span>
+  :computed  =&gt; 3.12997
+  :gitcommit =&gt; &quot;f17400da5d5db6f131ddfc853dd697939d49238e_dirty&quot;
+  :gitpatch  =&gt; &quot;diff --git a/papers/drwatson.jmd b/papers/drwatson.jmd\nindex …</span>
 </pre>
 
 <p>Store it in the data folder. <code>safesave</code> makes sure that nothing is overwritten.</p>
@@ -796,8 +796,8 @@ Dict{Symbol,Any} with 3 entries:
 
 
 <pre class="output">
-&#40;Dict&#123;Symbol,Any&#125;&#40;:computed &#61;&gt; 2.0868413004884045&#41;, &quot;/home/niklas/repos/Jul
-iaFudge/data/mysimulation/n&#61;10_opt&#61;ADAM_w&#61;4.2.bson&quot;&#41;
+&#40;Dict&#123;Symbol,Any&#125;&#40;:computed &#61;&gt; 3.129973211851907&#41;, &quot;/home/niklas/repos/Juli
+aFudge/data/mysimulation/n&#61;10_opt&#61;ADAM_w&#61;4.2.bson&quot;&#41;
 </pre>
 
 
@@ -842,7 +842,7 @@ iaFudge/data/mysimulation/n&#61;10_opt&#61;ADAM_w&#61;4.2.bson&quot;&#41;
         <div class="footer">
           <p>
             Published from <a href="drwatson.jmd">drwatson.jmd</a>
-            using <a href="http://github.com/JunoLab/Weave.jl">Weave.jl</a> v0.10.2 on 2020-06-11.
+            using <a href="http://github.com/JunoLab/Weave.jl">Weave.jl</a> v0.10.2 on 2020-06-12.
           </p>
         </div>
       </div>
