@@ -13,13 +13,13 @@ introduction to Julia type system.
 
 ## Dataframes
 
-Learn how to use dataframes in this [notebook](notebooks/DataFrames and experiments.ipynb).
+Learn how to use dataframes in this [notebook](notebooks/dataframes_and_experiments.ipynb).
 
 
 ## DrWatson - Reproducible Science
 
 A short introdcution to reproducibility and automation with DrWatson
-[here](papers/drwatson.html) And an exemplary run script
+[here](papers/drwatson.html), and an exemplary run script
 [here](scripts/final_run.jl).
 
 
