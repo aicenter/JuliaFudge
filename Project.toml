@@ -2,10 +2,13 @@ name = "JuliaFudge"
 
 [deps]
 BSON = "fbb218c0-5317-5bc6-957e-2ee96dd4b1f0"
+ConditionalDists = "c648c4dd-c1e0-49a6-84b9-144ae7fd2468"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
 DrWatson = "634d3b9d-ee7a-5ddf-bec9-22491ea816e1"
 Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+MLDatasets = "eb30cadb-4394-5ae3-aed4-317e484a6458"
 Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
 NeuralArithmetic = "ab1feca7-9272-4c7d-b713-789d3461e743"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"

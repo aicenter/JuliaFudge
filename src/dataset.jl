@@ -14,7 +14,7 @@ Creates a batch of 100 inputs and labels for the task
 x and y are samples randomly from U(0.1,2.0)
 """
 function generate()
-    x = rand(Float32, 2, 100) .* 1.9 .+ 0.1f0
+    x = rand(Float32, 2, 100) .* 1.9f0 .+ 0.1f0
     y = f(x)
     (x,y)
 end
