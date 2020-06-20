@@ -6,6 +6,8 @@ struct VAE{Tp<:TuringMvNormal, Te<:ConditionalMeanVarMvNormal, Td<:ConditionalMe
     decoder::Td
 end
 
+(m::VAE)(x) = mean(m.decoder, mean(m.encoder, x))
+
 Flux.@functor ConditionalMeanVarMvNormal
 Flux.@functor VAE
 Flux.params(m::ConditionalMeanVarMvNormal) = Flux.params(m.mapping)
@@ -19,13 +21,13 @@ function _kld_gaussian(μ1::AbstractArray, σ1::AbstractArray, μ2::AbstractArra
     (m1 .+ m2 .+ m3 .- k) ./ 2
 end
 
-function (m::Distances.KLDivergence)(p::TuringMvNormal, q::TuringMvNormal)
+function (m::Distances.KLDivergence)(p, q)
     μ1, σ1 = mean(p), var(p)
     μ2, σ2 = mean(p), var(p)
     _kld_gaussian(μ1, σ1, μ2, σ2)
 end
 
-Distances.kl_divergence(p::TuringMvNormal, q::TuringMvNormal) = KLDivergence()(p, q)
+Distances.kl_divergence(p, q) = KLDivergence()(p, q)
 
 function elbo(m::VAE, x::AbstractArray; β=1)
     z = rand(m.encoder, x)
