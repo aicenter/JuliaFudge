@@ -85,7 +85,8 @@ We want to systematically name our results according to the parameters that
 generate them.
 ```julia term=true
 config = @dict(n,w,opt)
-savename(config)
+name = savename(config)
+parse_savename(name)
 ```
 Find out more with `?savename`.
 

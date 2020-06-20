@@ -742,7 +742,7 @@ simulate (generic function with 1 method)
 &quot;ADAM&quot;
 
 </span><span class='hljl-nB'>julia&gt; </span><span class='hljl-n'>r</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>simulate</span><span class='hljl-p'>(</span><span class='hljl-n'>n</span><span class='hljl-p'>,</span><span class='hljl-n'>w</span><span class='hljl-p'>,</span><span class='hljl-n'>opt</span><span class='hljl-p'>)</span><span class='hljl-t'>
-3.129973211851907</span>
+3.320279255580955</span>
 </pre>
 
 <p>We want to systematically name our results according to the parameters that generate them.</p>
@@ -754,8 +754,11 @@ Dict{Symbol,Any} with 3 entries:
   :opt =&gt; &quot;ADAM&quot;
   :n   =&gt; 10
 
-</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-nf'>savename</span><span class='hljl-p'>(</span><span class='hljl-n'>config</span><span class='hljl-p'>)</span><span class='hljl-t'>
-&quot;n=10_opt=ADAM_w=4.2&quot;</span>
+</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-n'>name</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>savename</span><span class='hljl-p'>(</span><span class='hljl-n'>config</span><span class='hljl-p'>)</span><span class='hljl-t'>
+&quot;n=10_opt=ADAM_w=4.2&quot;
+
+</span><span class='hljl-nB'>julia&gt; </span><span class='hljl-nf'>parse_savename</span><span class='hljl-p'>(</span><span class='hljl-n'>name</span><span class='hljl-p'>)</span><span class='hljl-t'>
+(&quot;&quot;, Dict{String,Any}(&quot;opt&quot; =&gt; &quot;ADAM&quot;,&quot;w&quot; =&gt; 4.2,&quot;n&quot; =&gt; 10), &quot;&quot;)</span>
 </pre>
 
 <p>Find out more with <code>?savename</code>.</p>
@@ -764,13 +767,13 @@ Dict{Symbol,Any} with 3 entries:
 <pre class='hljl'>
 <span class='hljl-nB'>julia&gt; </span><span class='hljl-n'>result</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Dict</span><span class='hljl-p'>(</span><span class='hljl-sc'>:computed</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>r</span><span class='hljl-p'>)</span><span class='hljl-t'>
 Dict{Symbol,Float64} with 1 entry:
-  :computed =&gt; 3.12997
+  :computed =&gt; 3.32028
 
 </span><span class='hljl-nB'>julia&gt; </span><span class='hljl-nf'>tag!</span><span class='hljl-p'>(</span><span class='hljl-n'>result</span><span class='hljl-p'>)</span><span class='hljl-t'>
 Dict{Symbol,Any} with 3 entries:
-  :computed  =&gt; 3.12997
-  :gitcommit =&gt; &quot;f17400da5d5db6f131ddfc853dd697939d49238e_dirty&quot;
-  :gitpatch  =&gt; &quot;diff --git a/papers/drwatson.jmd b/papers/drwatson.jmd\nindex …</span>
+  :computed  =&gt; 3.32028
+  :gitcommit =&gt; &quot;b56a7d5f224d7f3683c17c55373709ebd4aff13d_dirty&quot;
+  :gitpatch  =&gt; &quot;diff --git a/papers/drwatson.html b/papers/drwatson.html\ninde…</span>
 </pre>
 
 <p>Store it in the data folder. <code>safesave</code> makes sure that nothing is overwritten.</p>
@@ -796,7 +799,7 @@ Dict{Symbol,Any} with 3 entries:
 
 
 <pre class="output">
-&#40;Dict&#123;Symbol,Any&#125;&#40;:computed &#61;&gt; 3.129973211851907&#41;, &quot;/home/niklas/repos/Juli
+&#40;Dict&#123;Symbol,Any&#125;&#40;:computed &#61;&gt; 3.320279255580955&#41;, &quot;/home/niklas/repos/Juli
 aFudge/data/mysimulation/n&#61;10_opt&#61;ADAM_w&#61;4.2.bson&quot;&#41;
 </pre>
 

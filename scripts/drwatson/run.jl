@@ -14,7 +14,7 @@ include(srcdir("dataset.jl")) # defines `generate` to produce our data
 # hyper parameters
 niters = 20000
 βl1    = 0
-lr     = 0.005
+lr     = 0.001
 hdim   = 6
 
 """
