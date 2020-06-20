@@ -78,18 +78,19 @@ model = res[:model]
 
 test_x, test_y = MNIST.testdata(Float32)
 
-using UnicodePlots
+using Plots
+pyplot()
 test_x = test_x[:,:,1:5]
 
 for i in 1:size(test_x,3)
     img = test_x[:,:,i]
     display(heatmap(img', title="truth"))
     x = reshape(img,:)
-    x̂ = model(x)'
-    rec = reshape(x̂, size(img))
+    x̂ = model(x)
+    rec = reshape(x̂, size(img))'
     display(heatmap(rec, title="rec"))
 end
 
 test_x, test_y = MNIST.testdata(Float32)
 z = mean(model.encoder, reshape(test_x,:,size(test_x,3)))
-scatterplot(z[1,:], z[2,:], c=test_y)
+plot(z[1,:], z[2,:], c=test_y)
