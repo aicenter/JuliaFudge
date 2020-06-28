@@ -322,11 +322,20 @@ git-tree-sha1 = "202335fd24c2776493e198d6c66a6d910400a895"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 version = "1.3.0"
 
+[[FileWatching]]
+uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
+
 [[FillArrays]]
 deps = ["LinearAlgebra", "Random", "SparseArrays"]
 git-tree-sha1 = "bf726ba7ce99e00d10bf63c031285fb9ab3676ae"
 uuid = "1a297f60-69ca-5386-bcde-b61e274b549b"
 version = "0.8.11"
+
+[[FiniteDifferences]]
+deps = ["LinearAlgebra", "Printf"]
+git-tree-sha1 = "698523540a5a93a2e4cb18b9c2bd28b9b4388251"
+uuid = "26cc04aa-876d-5657-8c51-4c34ba976000"
+version = "0.10.2"
 
 [[FixedPointNumbers]]
 git-tree-sha1 = "8fb797c37a3b7ced4327a05ac4ca0dd6a4f1ba92"
@@ -420,6 +429,12 @@ deps = ["DocStringExtensions", "InteractiveUtils", "REPL"]
 git-tree-sha1 = "f823a2d04fb233d52812c8024a6d46d9581904a4"
 uuid = "eafb193a-b7ab-5a9e-9068-77385905fa72"
 version = "0.4.5"
+
+[[IJulia]]
+deps = ["Base64", "Conda", "Dates", "InteractiveUtils", "JSON", "Markdown", "MbedTLS", "Pkg", "Printf", "REPL", "Random", "SoftGlobalScope", "Test", "UUIDs", "ZMQ"]
+git-tree-sha1 = "ce336ee8224143d053bf053680bf9182adfd8638"
+uuid = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
+version = "1.21.2"
 
 [[IRTools]]
 deps = ["InteractiveUtils", "MacroTools", "Test"]
@@ -611,9 +626,9 @@ version = "0.3.9+4"
 
 [[OpenSSL_jll]]
 deps = ["Libdl", "Pkg"]
-git-tree-sha1 = "d120f3b7173eba8b55b7008fa576e46dbd5da536"
+git-tree-sha1 = "7aaaded15bf393b5f34c2aad5b765c18d26cb495"
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-version = "1.1.1+3"
+version = "1.1.1+4"
 
 [[OpenSpecFun_jll]]
 deps = ["CompilerSupportLibraries_jll", "Libdl", "Pkg"]
@@ -778,6 +793,12 @@ version = "0.3.1"
 [[Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
 
+[[SoftGlobalScope]]
+deps = ["Test"]
+git-tree-sha1 = "012661b70364840fcd380912d878d96f7bf95ff3"
+uuid = "b85f4697-e234-5449-a836-ec8e2f98b302"
+version = "1.0.10"
+
 [[SortingAlgorithms]]
 deps = ["DataStructures", "Random", "Test"]
 git-tree-sha1 = "03f5898c9959f8115e30bc7226ada7d0df554ddd"
@@ -901,6 +922,18 @@ git-tree-sha1 = "c5e2eaa5ce818c5277388377d592eb4c81f27c00"
 uuid = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 version = "0.4.0"
 
+[[ZMQ]]
+deps = ["FileWatching", "Sockets", "ZeroMQ_jll"]
+git-tree-sha1 = "fc68e8a3719166950a0f3e390a14c7302c48f8de"
+uuid = "c2297ded-f4af-51ae-bb23-16f91089e4e1"
+version = "1.2.1"
+
+[[ZeroMQ_jll]]
+deps = ["Libdl", "Pkg"]
+git-tree-sha1 = "733352667c60ce39dfd3017db9b798b288c87417"
+uuid = "8f1865be-045e-5c20-9c9f-bfbfb0764568"
+version = "4.3.2+4"
+
 [[ZipFile]]
 deps = ["Libdl", "Printf", "Zlib_jll"]
 git-tree-sha1 = "254975fef2fc526583bb9b7c9420fe66ffe09f2f"
@@ -909,9 +942,9 @@ version = "0.9.2"
 
 [[Zlib_jll]]
 deps = ["Libdl", "Pkg"]
-git-tree-sha1 = "64b39656c75e67f85b4ac2b336c54674a39f599d"
+git-tree-sha1 = "622d8b6dc0c7e8029f17127703de9819134d1b71"
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.11+11"
+version = "1.2.11+14"
 
 [[Zstd_jll]]
 deps = ["Libdl", "Pkg"]
@@ -921,9 +954,9 @@ version = "1.4.5+0"
 
 [[Zygote]]
 deps = ["AbstractFFTs", "ArrayLayouts", "ChainRules", "FillArrays", "ForwardDiff", "Future", "IRTools", "InteractiveUtils", "LinearAlgebra", "MacroTools", "NNlib", "Random", "Requires", "Statistics", "ZygoteRules"]
-git-tree-sha1 = "6d0f78976db6dbea9a36865efe068e6e2a5db6ed"
+git-tree-sha1 = "2e2c82549fb0414df10469082fd001e2ede8547c"
 uuid = "e88e6eb3-aa80-5325-afca-941959d7151f"
-version = "0.4.21"
+version = "0.4.22"
 
 [[ZygoteRules]]
 deps = ["MacroTools"]
