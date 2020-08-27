@@ -7,6 +7,7 @@ using ProgressLogging
 global_logger(TerminalLogger(right_justify=80))
 
 using Flux
+using PDMats
 using Distributions
 using ConditionalDists
 using MLDatasets
@@ -15,12 +16,14 @@ include(srcdir("splitlayer.jl"))
 include(srcdir("vae.jl"))
 
 function train!(loss, ps, data, opt)
-    @progress for x in data
+    training_loss = loss(first(data))
+    iters = length(data)
+    @withprogress name="Loss: $training_loss" for (i,x) in enumerate(data)
         gs = Flux.gradient(ps) do
           training_loss = loss(x)
           return training_loss
         end
-        @info loss(first(data))
+        ProgressLogging.@logprogress "Loss: $training_loss" i/iters
         Flux.Optimise.update!(opt, ps, gs)
     end
 end
@@ -48,25 +51,17 @@ function run(config)
     # conditional normal decoder
     dec_map  = Chain(Dense(zlength, hd2, relu),
                      Dense(hd2, hdim, relu),
-                     SplitLayer(hdim, [xlength,xlength], σ))
+                     SplitLayer(hdim, [xlength,1], σ))
     decoder = ConditionalMvNormal(dec_map)
 
     model = VAE(prior, encoder, decoder)
-    # loss(x) = -elbo(model,x)
-    function loss(x)
-        z = mean(model.encoder, x)
-        llh = mean(logpdf(model.decoder, x, z))
-
-        -llh
-    end
-    # display(loss(first(data)))
-    # error()
+    loss(x) = -elbo(model,x)
 
     ps = Flux.params(model)
-    opt = ADAM(0.001)
+    opt = ADAM(1e-4)
     
-    for e in 1:1
-        @info "Epoch $e" loss(flat_x)
+    for e in 1:10
+        @info "Epoch $e"
         train!(loss, ps, data, opt)
     end
     return @dict(model)
@@ -74,7 +69,7 @@ end
 
 res, _ = produce_or_load(datadir("mnist"),
                 Dict(:hdim=>512, :zlength=>2),
-                run, force=true)
+                run, force=false)
 model = res[:model]
 
 test_x, test_y = MNIST.testdata(Float32)
@@ -86,15 +81,16 @@ test_x = test_x[:,:,1:6]
 plts = []
 for i in 1:size(test_x,3)
     img = test_x[:,:,i]
-    p1 = heatmap(img'[end:-1:1,:], title="truth")
-    push!(plts, p1)
+    s1 = heatmap(img'[end:-1:1,:], title="truth")
+    push!(plts, s1)
     x = reshape(img,:)
     x̂ = model(x)
     rec = reshape(x̂, size(img))'[end:-1:1,:]
-    p2 = heatmap(rec, title="rec")
-    push!(plts, p2)
+    s2 = heatmap(rec, title="rec")
+    push!(plts, s2)
 end
 p1 = plot(plts...)
+display(p1)
 
 test_x, test_y = MNIST.testdata(Float32)
 z = mean(model.encoder, reshape(test_x,:,size(test_x,3)))

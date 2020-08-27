@@ -16,7 +16,7 @@ end
 
 Flux.@functor ConditionalMvNormal
 Flux.@functor VAE
-#Flux.params(m::ConditionalMvNormal) = Flux.params(m.mapping)
+Flux.params(m::ConditionalMvNormal) = Flux.params(m.mapping)
 Flux.params(m::VAE) = Flux.params(m.encoder, m.decoder)
 
 function _kld_gaussian(μ1::AbstractArray, σ1::AbstractArray, μ2::AbstractArray, σ2::AbstractArray)
@@ -45,5 +45,5 @@ function elbo(m::VAE, x::AbstractArray; β=1)
     # KLD with `condition`ed encoder
     kld = mean(kl_divergence(condition(m.encoder, x), m.prior))
 
-    llh #- β*kld
+    llh - β*kld
 end
