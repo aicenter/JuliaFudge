@@ -22,14 +22,6 @@ function train!(loss, ps, data, opt)
     end
 end
 
-struct AutoEncoder
-    enc
-    dec
-end
-Flux.@functor AutoEncoder
-
-(m::AutoEncoder)(x) = m.dec(m.enc(x))
-
 function run(config)
     @unpack zlength, hdim = config
     hd2 = Int(hdim/2)
@@ -80,17 +72,21 @@ test_x, test_y = MNIST.testdata(Float32)
 
 using Plots
 pyplot()
-test_x = test_x[:,:,1:5]
+test_x = test_x[:,:,1:6]
 
+plts = []
 for i in 1:size(test_x,3)
     img = test_x[:,:,i]
-    display(heatmap(img', title="truth"))
+    p1 = heatmap(img'[end:-1:1,:], title="truth")
+    push!(plts, p1)
     x = reshape(img,:)
     x̂ = model(x)
-    rec = reshape(x̂, size(img))'
-    display(heatmap(rec, title="rec"))
+    rec = reshape(x̂, size(img))'[end:-1:1,:]
+    p2 = heatmap(rec, title="rec")
+    push!(plts, p2)
 end
+p1 = plot(plts...)
 
 test_x, test_y = MNIST.testdata(Float32)
 z = mean(model.encoder, reshape(test_x,:,size(test_x,3)))
-plot(z[1,:], z[2,:], c=test_y)
+p2 = scatter(z[1,:], z[2,:], c=test_y)

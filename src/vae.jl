@@ -30,8 +30,14 @@ end
 Distances.kl_divergence(p, q) = KLDivergence()(p, q)
 
 function elbo(m::VAE, x::AbstractArray; β=1)
+    # sample latent codes
     z = rand(m.encoder, x)
+
+    # reconstruction error
     llh = mean(logpdf(m.decoder, x, z))
+
+    # KLD with `condition`ed encoder
     kld = mean(kl_divergence(condition(m.encoder, x), m.prior))
+
     llh - β*kld
 end
