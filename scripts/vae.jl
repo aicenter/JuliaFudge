@@ -7,9 +7,11 @@ using ProgressLogging
 global_logger(TerminalLogger(right_justify=80))
 
 using Flux
+using Distributions
 using ConditionalDists
 using MLDatasets
 
+include(srcdir("splitlayer.jl"))
 include(srcdir("vae.jl"))
 
 function train!(loss, ps, data, opt)
@@ -18,6 +20,7 @@ function train!(loss, ps, data, opt)
           training_loss = loss(x)
           return training_loss
         end
+        @info loss(first(data))
         Flux.Optimise.update!(opt, ps, gs)
     end
 end
@@ -33,30 +36,36 @@ function run(config)
     xlength = size(flat_x, 1)
     
     # standard normal prior
-    prior = TuringMvNormal(zeros(Float32, zlength), ones(Float32, zlength))
+    prior = MvNormal(zeros(Float32, zlength), ones(Float32, zlength))
     
     # conditional normal encoder
-    enc_dist = TuringMvNormal(zeros(Float32, zlength), ones(Float32, zlength))
     enc_map  = Chain(Dense(xlength, hdim, relu),
                      Dense(hdim, hd2, relu),
-                     Dense(hd2, zlength*2))
-    encoder = ConditionalMeanVarMvNormal(enc_dist, enc_map)
+                     SplitLayer(hd2, [zlength,zlength]))
+    encoder = ConditionalMvNormal(enc_map)
 
     
     # conditional normal decoder
-    dec_dist = TuringMvNormal(zeros(Float32, xlength), ones(Float32, xlength))
     dec_map  = Chain(Dense(zlength, hd2, relu),
                      Dense(hd2, hdim, relu),
-                     Dense(hdim, xlength+1, σ))
-    decoder = ConditionalMeanVarMvNormal(dec_dist, dec_map)
-    
+                     SplitLayer(hdim, [xlength,xlength], σ))
+    decoder = ConditionalMvNormal(dec_map)
+
     model = VAE(prior, encoder, decoder)
-    loss(x) = -elbo(model,x)
+    # loss(x) = -elbo(model,x)
+    function loss(x)
+        z = mean(model.encoder, x)
+        llh = mean(logpdf(model.decoder, x, z))
+
+        -llh
+    end
+    # display(loss(first(data)))
+    # error()
 
     ps = Flux.params(model)
-    opt = ADAM()
+    opt = ADAM(0.001)
     
-    for e in 1:10
+    for e in 1:1
         @info "Epoch $e" loss(flat_x)
         train!(loss, ps, data, opt)
     end
@@ -65,7 +74,7 @@ end
 
 res, _ = produce_or_load(datadir("mnist"),
                 Dict(:hdim=>512, :zlength=>2),
-                run, force=false)
+                run, force=true)
 model = res[:model]
 
 test_x, test_y = MNIST.testdata(Float32)
