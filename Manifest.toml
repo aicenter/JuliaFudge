@@ -152,10 +152,10 @@ uuid = "8f4d0f93-b110-5947-807f-2305c1781a2d"
 version = "1.4.1"
 
 [[ConditionalDists]]
-deps = ["Distributions", "DistributionsAD", "LinearAlgebra", "Random", "StatsBase"]
-git-tree-sha1 = "867955a45b46d64d29f2674feed0f82f6e60db44"
+deps = ["ChainRulesCore", "Distributions", "DistributionsAD", "Flux", "LinearAlgebra", "Random"]
+path = "/home/niklas/.julia/dev/ConditionalDists"
 uuid = "c648c4dd-c1e0-49a6-84b9-144ae7fd2468"
-version = "0.4.0"
+version = "0.4.2"
 
 [[Contour]]
 deps = ["StaticArrays"]
@@ -275,9 +275,9 @@ version = "4.3.1+2"
 
 [[FileIO]]
 deps = ["Pkg"]
-git-tree-sha1 = "1e7e88a949b52e6f7f589041bd60928322414997"
+git-tree-sha1 = "d367ced062a113d955c0dff847eb36f2565f2894"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-version = "1.4.1"
+version = "1.4.2"
 
 [[FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
@@ -572,9 +572,9 @@ version = "0.2.2"
 
 [[Mustache]]
 deps = ["Printf", "Tables"]
-git-tree-sha1 = "3d07128636eddde25a17aced63dbcedbce71a79d"
+git-tree-sha1 = "17e60d71d720c33ac2fbac21298ee495bae27587"
 uuid = "ffc61752-8dc7-55ee-8c37-f3e9cdd09e70"
-version = "1.0.4"
+version = "1.0.5"
 
 [[NNlib]]
 deps = ["Libdl", "LinearAlgebra", "Pkg", "Requires", "Statistics"]
@@ -813,9 +813,9 @@ uuid = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [[StatsBase]]
 deps = ["DataAPI", "DataStructures", "LinearAlgebra", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics"]
-git-tree-sha1 = "a6102b1f364befdb05746f386b67c6b7e3262c45"
+git-tree-sha1 = "19bfcb46245f69ff4013b3df3b977a289852c3a1"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
-version = "0.33.0"
+version = "0.32.2"
 
 [[StatsFuns]]
 deps = ["Rmath", "SpecialFunctions"]
@@ -886,10 +886,10 @@ version = "1.0.2"
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 
 [[UnicodePlots]]
-deps = ["Dates", "Random", "SparseArrays", "StatsBase", "Test"]
-git-tree-sha1 = "b8e58d4390ccebfa4f3bf502a45e08066eec3bf9"
+deps = ["Crayons", "Dates", "SparseArrays", "StatsBase"]
+git-tree-sha1 = "af0c29913f108f649999e74098814c7ef0f644de"
 uuid = "b8865327-cd53-5732-bb35-84acbb429228"
-version = "1.1.0"
+version = "1.2.0"
 
 [[VectorizationBase]]
 deps = ["CpuId", "Libdl", "LinearAlgebra"]
@@ -910,9 +910,9 @@ version = "0.10.3"
 
 [[YAML]]
 deps = ["Base64", "Dates", "Printf"]
-git-tree-sha1 = "bebd6ec011d427466cc85632f0854ed91d29dee0"
+git-tree-sha1 = "209c033ada051007a934f7ab4738a4776bc041c3"
 uuid = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
-version = "0.4.1"
+version = "0.4.2"
 
 [[ZMQ]]
 deps = ["FileWatching", "Sockets", "ZeroMQ_jll"]

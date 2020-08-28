@@ -12,7 +12,8 @@ using Distributions
 using ConditionalDists
 using MLDatasets
 
-include(srcdir("splitlayer.jl"))
+using ConditionalDists: SplitLayer
+
 include(srcdir("vae.jl"))
 
 function train!(loss, ps, data, opt)
@@ -34,7 +35,7 @@ function run(config)
 
     train_x, _ = MNIST.traindata(Float32)
     flat_x = reshape(train_x, :, size(train_x,3))
-    data = Flux.Data.DataLoader(flat_x, batchsize=128, shuffle=true)
+    data = Flux.Data.DataLoader(flat_x, batchsize=200, shuffle=true)
 
     xlength = size(flat_x, 1)
     
@@ -58,10 +59,10 @@ function run(config)
     loss(x) = -elbo(model,x)
 
     ps = Flux.params(model)
-    opt = ADAM(1e-4)
+    opt = ADAM()
     
-    for e in 1:10
-        @info "Epoch $e"
+    for e in 1:30
+        @info "Epoch $e" loss(flat_x)
         train!(loss, ps, data, opt)
     end
     return @dict(model)
@@ -74,8 +75,9 @@ model = res[:model]
 
 test_x, test_y = MNIST.testdata(Float32)
 
+
 using Plots
-pyplot()
+#pyplot()
 test_x = test_x[:,:,1:6]
 
 plts = []
@@ -84,7 +86,8 @@ for i in 1:size(test_x,3)
     s1 = heatmap(img'[end:-1:1,:], title="truth")
     push!(plts, s1)
     x = reshape(img,:)
-    x̂ = model(x)
+    rec(x) = mean(model.decoder, mean(model.encoder, x))
+    x̂ = rec(x)
     rec = reshape(x̂, size(img))'[end:-1:1,:]
     s2 = heatmap(rec, title="rec")
     push!(plts, s2)
