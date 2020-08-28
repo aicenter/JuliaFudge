@@ -29,7 +29,7 @@ end
 
 function (m::Distances.KLDivergence)(p, q)
     μ1, σ1 = mean(p), var(p)
-    μ2, σ2 = mean(p), var(p)
+    μ2, σ2 = mean(q), var(q)
     _kld_gaussian(μ1, σ1, μ2, σ2)
 end
 
