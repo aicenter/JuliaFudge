@@ -38,14 +38,11 @@ function run(config)
     data = Flux.Data.DataLoader(flat_x, batchsize=200, shuffle=true)
 
     xlength = size(flat_x, 1)
-    
-    # standard normal prior
-    prior = MvNormal(zeros(Float32, zlength), ones(Float32, zlength))
-    
+
     # conditional normal encoder
     enc_map  = Chain(Dense(xlength, hdim, relu),
                      Dense(hdim, hd2, relu),
-                     SplitLayer(hd2, [zlength,zlength]))
+                     SplitLayer(hd2, [zlength,zlength], [identity,softplus]))
     encoder = ConditionalMvNormal(enc_map)
 
     
@@ -55,7 +52,7 @@ function run(config)
                      SplitLayer(hdim, [xlength,1], σ))
     decoder = ConditionalMvNormal(dec_map)
 
-    model = VAE(prior, encoder, decoder)
+    model = VAE(zlength, encoder, decoder)
     loss(x) = -elbo(model,x)
 
     ps = Flux.params(model)
