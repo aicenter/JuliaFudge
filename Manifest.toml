@@ -354,15 +354,23 @@ version = "0.6.1"
 
 [[GR]]
 deps = ["Base64", "DelimitedFiles", "HTTP", "JSON", "LinearAlgebra", "Printf", "Random", "Serialization", "Sockets", "Test", "UUIDs"]
-git-tree-sha1 = "e26c513329675092535de20cc4bb9c579c8f85a0"
+git-tree-sha1 = "cd0f34bd097d4d5eb6bbe01778cf8a7ed35f29d9"
 uuid = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
-version = "0.51.0"
+version = "0.52.0"
 
 [[GZip]]
 deps = ["Libdl"]
 git-tree-sha1 = "039be665faf0b8ae36e089cd694233f5dee3f7d6"
 uuid = "92fee26a-97fe-5a0c-ad85-20a5f3185b63"
 version = "0.5.1"
+
+[[GenerativeModels]]
+deps = ["ConditionalDists", "Distances", "Distributions", "DistributionsAD", "Flux", "KernelFunctions", "Random", "Reexport", "Statistics"]
+git-tree-sha1 = "5ad485d8a7ac0a1d3bd2f3b10d38e437ce38db87"
+repo-rev = "conddists-0.4"
+repo-url = "https://github.com/aicenter/GenerativeModels.jl.git"
+uuid = "6ac2c632-c4cd-11e9-0501-33c4b9b2f9c9"
+version = "0.1.1"
 
 [[GeometryBasics]]
 deps = ["IterTools", "LinearAlgebra", "StaticArrays", "StructArrays", "Tables"]
@@ -449,6 +457,12 @@ deps = ["Base64", "Logging", "Media", "Profile"]
 git-tree-sha1 = "90976c3ab792a98d240d42f9df07420ccfc60668"
 uuid = "e5e0dc1b-0480-54bc-9374-aad01c23163d"
 version = "0.8.3"
+
+[[KernelFunctions]]
+deps = ["Compat", "Distances", "Functors", "InteractiveUtils", "LinearAlgebra", "Requires", "SpecialFunctions", "StatsBase", "StatsFuns", "ZygoteRules"]
+git-tree-sha1 = "b4ff1628a90f6b61bde58e2281bcf0f3893a8f08"
+uuid = "ec8451be-7e33-11e9-00cf-bbf324bd1392"
+version = "0.7.2"
 
 [[LAME_jll]]
 deps = ["Libdl", "Pkg"]
@@ -657,9 +671,9 @@ version = "1.0.6"
 
 [[Plots]]
 deps = ["Base64", "Contour", "Dates", "FFMPEG", "FixedPointNumbers", "GR", "GeometryBasics", "GeometryTypes", "JSON", "LinearAlgebra", "Measures", "NaNMath", "PlotThemes", "PlotUtils", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "Requires", "Showoff", "SparseArrays", "Statistics", "StatsBase", "UUIDs"]
-git-tree-sha1 = "d580aafb244a1e856c11dca4f36c0edddfaa38b6"
+git-tree-sha1 = "b81e3dfb1f0ece1e170b8768d2d0f10a78dfb4d7"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-version = "1.6.2"
+version = "1.6.3"
 
 [[PooledArrays]]
 deps = ["DataAPI"]
