@@ -14,8 +14,6 @@ using MLDatasets
 
 using ConditionalDists: SplitLayer
 
-include(srcdir("vae.jl"))
-
 function train!(loss, ps, data, opt)
     training_loss = loss(first(data))
     iters = length(data)
@@ -67,7 +65,7 @@ end
 
 res, _ = produce_or_load(datadir("mnist"),
                 Dict(:hdim=>512, :zlength=>2),
-                run, force=false)
+                run, force=true)
 model = res[:model]
 
 test_x, test_y = MNIST.testdata(Float32)
